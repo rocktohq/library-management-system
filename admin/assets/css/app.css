@@ -1,0 +1,262 @@
+/* CSS by Saidul Mursalin */
+
+
+/* Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+:root {
+    --offCanvasWidth: 270px;
+    --topNavHeight: 56px;
+    --fontFamily: 'Poppins', sans-serif;
+    --input-color: gray;
+}
+
+body {
+    font-family: var(--fontFamily);
+    margin-bottom: 60px;
+}
+
+
+/* Typo */
+
+.text-red {
+    color: red;
+}
+
+.fs-sum {
+    font-size: 3rem;
+}
+
+.highlight {
+    color: #fff;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+.cursor-pointer span {
+    cursor: pointer;
+}
+
+.cursor-pointer i {
+    cursor: pointer;
+}
+
+
+/* Reset Button & Input Fucos */
+
+button:focus,
+button:active:focus,
+button.active:focus,
+button.focus,
+button:active.focus,
+button.active.focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+input:focus,
+input:active:focus,
+input.active:focus,
+input.focus,
+input:active.focus,
+input.active.focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+
+/* Main */
+
+main {
+    margin-left: var(--offCanvasWidth);
+}
+
+.admin-login main {
+    margin-left: unset;
+}
+
+
+/* Sidebar Designs */
+
+.sidebar-nav {
+    width: var(--offCanvasWidth);
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-link .right-icon {
+    display: inline-flex;
+    transition: all ease 0.25s;
+}
+
+.sidebar-link[aria-expanded="true"] .right-icon {
+    transform: rotate(180deg);
+}
+
+.addstudent input::-webkit-outer-spin-button,
+.addstudent input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.addstudent input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+/* Mass */
+
+.mass-form .input-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
+
+.mass-form .input-group label {
+    font-size: 1rem;
+}
+
+.mass-form .input-group input {
+    width: 70%;
+    padding: 8px;
+    border: 1px solid var(--input-color);
+    color: var(--input-color);
+}
+
+.mass-form .input-group select {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid var(--input-color);
+    color: var(--input-color);
+    background-color: transparent;
+}
+
+.mass-form .input-group select option {
+    font-size: 15px;
+}
+
+
+/* Dashboard */
+
+.offcanvas-mobile-close {
+    background: transparent;
+    border: 0;
+}
+
+.card-stats {
+    margin-right: 10px;
+}
+
+.requests a {
+    text-decoration: none;
+}
+
+
+/* Footer */
+
+footer {
+    background-color: rgba(0, 0, 0, 0.95);
+    position: fixed;
+    text-align: center;
+}
+
+footer .dev {
+    color: lightgray;
+    padding: 5px;
+}
+
+
+/* Loader */
+
+.loader {
+    height: 100vh;
+    width: 100vw;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media (min-width: 992px) {
+    body {
+        overflow: auto !important;
+    }
+    .sidebar-nav {
+        transform: none;
+        visibility: visible !important;
+        top: var(--topNavHeight);
+        height: calc(100% - var(--topNavHeight));
+    }
+    .card-total {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .offcanvas-mobile-close {
+        display: none;
+    }
+    footer {
+        left: calc(var(--offCanvasWidth) - 1px);
+        bottom: 0;
+        height: 40px;
+        width: calc(100% - var(--offCanvasWidth) + 1px);
+    }
+    .admin-login footer {
+        left: 0;
+        bottom: 0;
+        height: 60px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    body {
+        margin-bottom: 80px;
+    }
+    main {
+        margin-left: unset;
+    }
+    footer {
+        background-color: rgba(0, 0, 0, 0.95);
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        height: 60px;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-stats {
+        margin-right: unset;
+    }
+    .head-text {
+        font-size: 2rem !important;
+        ;
+    }
+}
