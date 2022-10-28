@@ -108,6 +108,11 @@ main {
     -moz-appearance: textfield;
 }
 
+.thumbnail {
+    height: 30px;
+    aspect-ratio: 1;
+}
+
 
 /* Mass */
 

@@ -33,7 +33,7 @@ if(isset($_COOKIE['lmsadmin'])) {
         $sid = $_GET['sid'];
 
         // Book Information
-        $sql = "SELECT * FROM `students` WHERE `id` = '$sid'";
+        $sql = "SELECT * FROM `teachers` WHERE `id` = '$sid'";
         $result = $connect->query($sql);
         if(empty($row =  $result->fetch_assoc())) {
             echo "Invalid Student";
@@ -52,20 +52,16 @@ if(isset($_COOKIE['lmsadmin'])) {
         if(empty($department = $_POST['department'])) {
             $department = $row['department'];
         }
-        if(empty($batch = $_POST['batch'])) {
-            $batch = $row['batch'];
-        }
-        if(empty($year = $_POST['year'])) {
-            $year = $row['year'];
-        }
-        if(empty($semester = $_POST['semester'])) {
-            $semester = $row['semester'];
-        }
-        if(empty($session = $_POST['session'])) {
-            $session = $row['session'];
-        }
         if(empty($phone = $_POST['phone'])) {
             $phone = $row['phone'];
+        }
+        if(empty($password = $_POST['password'])) {
+            $password = $row['password'];
+        } else {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        }
+        if(empty($email = $_POST['email'])) {
+            $email = $row['email'];
         }
 
         // Photo
@@ -75,7 +71,7 @@ if(isset($_COOKIE['lmsadmin'])) {
             if(!empty($filename)) {
                 $tempname = $_FILES["photo"]["tmp_name"];
                 $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-                $folder = "../uploads/profile/";
+                $folder = "../uploads/teacher/";
                 $photo =  uniqid() . ".". $imageFileType;
                 $check = getimagesize($tempname);
     
@@ -90,7 +86,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                 $message = "Photo can't be uploaded!";
                 }
             } else {
-                $photo = $row['photo'];
+                $photo = $row['image'];
             }
         }
 
@@ -101,27 +97,25 @@ if(isset($_COOKIE['lmsadmin'])) {
         if($result->fetch_assoc()['row_exists']) {
             
             $sql = "UPDATE
-            `students`
+            `teachers`
             SET
             `uid` = '$uid',
             `name` = '$name',
             `department` = '$department',
-            `batch` = '$batch',
-            `year` = '$year',
-            `semester` = '$semester',
-            `session` = '$session',
             `phone` = '$phone',
-            `photo` = '$photo'
+            `email` = '$email',
+            `password` = '$password',
+            `image` = '$photo'
             WHERE
                 `id` = '$sid'";
 
             $result = $connect->query($sql);
             if($result) {
-                $_SESSION['success'] = "Student Updated Successfully";
-                header("Location: updatestudent.php?sid={$sid}");
+                $_SESSION['success'] = "Teacher Updated Successfully";
+                header("Location: teachers.php?sid={$sid}");
             } else {
-                $_SESSION['error'] = "Error Updating Student!";
-                header("Location: updatestudent.php?sid={$sid}");
+                $_SESSION['error'] = "Error Updating Teacher!";
+                header("Location: updateteacher.php?sid={$sid}");
             }
         }
     }
@@ -135,7 +129,7 @@ if(isset($_COOKIE['lmsadmin'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Student</title>
+    <title>Update Teacher</title>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -261,7 +255,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- StudentList -->
                     <li>
-                        <a class="nav-link active px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">
+                        <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">
                             <span class="me-2"><i class="bi bi-person-fill"></i></span>
                             <span>Students</span>
                             <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
@@ -282,7 +276,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- StudentList -->
                     <!-- TeacherList -->
                     <li>
-                        <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#teacherList" role="button" aria-expanded="false" aria-controls="teacherList">
+                        <a class="nav-link active px-3 sidebar-link" data-bs-toggle="collapse" href="#teacherList" role="button" aria-expanded="false" aria-controls="teacherList">
                             <span class="me-2"><i class="bi bi-person-lines-fill"></i></span>
                             <span>Teachers</span>
                             <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
@@ -404,7 +398,7 @@ if(isset($_COOKIE['lmsadmin'])) {
     <main class="mt-5 pt-3">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 fw-bold fs-3">Update Student</div>
+                <div class="col-md-12 fw-bold fs-3">Update Teacher</div>
                 <!-- ./NOTIFICATION -->
                 <?php
                 if(isset($success)) {
@@ -431,11 +425,11 @@ if(isset($_COOKIE['lmsadmin'])) {
                         <form action="" method="post" enctype="multipart/form-data" class="row px-3 addstudent">
                             <div class="mt-5">
                                 <div class="col-md-10 mb-2">
-                                    <label for="name" class="form-label">Student Name:</label>
+                                    <label for="name" class="form-label">Teacher's Name:</label>
                                     <input type="text" class="form-control" name="name" id="name" value="<?php echo $row['name']; ?>">
                                 </div>
                                 <div class="col-md-10 mb-2">
-                                    <label for="uid" class="form-label">Student ID:</label>
+                                    <label for="uid" class="form-label">Teacher ID:</label>
                                     <input type="number" class="form-control" name="uid" id="uid" value="<?php echo $row['uid']; ?>">
                                 </div>
                                 <div class="col-md-10 mb-2">
@@ -454,20 +448,12 @@ if(isset($_COOKIE['lmsadmin'])) {
                                     </select>
                                 </div>
                                 <div class="col-md-10 mb-2">
-                                    <label for="batch" class="form-label">Batch:</label>
-                                    <input type="number" class="form-control" name="batch" id="batch" value="<?php echo $row['batch']; ?>">
+                                    <label for="email" class="form-label">Email:</label>
+                                    <input type="email" class="form-control" name="email" id="email" value="<?php echo $row['email']; ?>">
                                 </div>
                                 <div class="col-md-10 mb-2">
-                                    <label for="session" class="form-label">Admission Session:</label>
-                                    <input type="text" class="form-control" name="session" id="session" value="<?php echo $row['session']; ?>">
-                                </div>
-                                <div class="col-md-10 mb-2">
-                                    <label for="year" class="form-label">Year:</label>
-                                    <input type="number" class="form-control" name="year" id="year" value="<?php echo $row['year']; ?>">
-                                </div>
-                                <div class="col-md-10 mb-2">
-                                    <label for="semester" class="form-label">Semester:</label>
-                                    <input type="number" class="form-control" name="semester" id="semester" value="<?php echo $row['semester']; ?>">
+                                    <label for="password" class="form-label">Password:</label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
                                 </div>
                                 <div class="col-md-10 mb-2">
                                     <label for="phone" class="form-label">Phone:</label>
@@ -479,7 +465,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <button name="update" type="submit" class="btn btn-primary text-uppercase">Update Student</button>
+                                <button name="update" type="submit" class="btn btn-primary text-uppercase">Update Teacher</button>
                             </div>
                         </form>
                     </div>

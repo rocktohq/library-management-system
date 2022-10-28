@@ -29,7 +29,13 @@ if(isset($_COOKIE['lmsadmin'])) {
     $adrow = $result->fetch_assoc();
     $adminrole = $adrow['role'];
 
-    // Delete Student
+    // Update Teacher
+    if(isset($_POST['update'])) {
+    $sid = $_POST['uid'];
+    header("Location: updateteacher.php?sid={$sid}");
+}
+
+    // Delete Teacher
     if(isset($_POST['delete'])) {
         $uid = $_POST['uid'];
         // Check if Exist or not
@@ -353,9 +359,9 @@ if(isset($_COOKIE['lmsadmin'])) {
                         <div class="form-outline me-1">
                         <input type="text" placeholder="Search Teacher" class="form-control" id="search">
                         </div>
-                        <span class="btn btn-primary me-1 cursor-pointer" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                        <a href="addteacher.php"><span class="btn btn-primary me-1">
                             <i class="bi bi-plus"></i>
-                      </span>
+                      </span></a>
                     </div>
                     <div id="table_inputs"></div>
                 </section>

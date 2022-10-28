@@ -14,7 +14,7 @@ if(isset($_GET['a'])) {
                 while($row = $result->fetch_assoc()) {
 
                     echo "<tr class='text-center'>
-                            <td class='fw-bold'>{$i}</td>
+                            <td class='fw-bold'><img class='thumbnail' src='../uploads/teacher/{$row['image']}'></td>
                             <td>{$row['name']}</td>
                             <td>{$row['uid']}</td>
                             <td>".strtoupper($row["department"])."</td>
@@ -22,6 +22,7 @@ if(isset($_GET['a'])) {
                                 <form action='' method='POST'>
                                     <input type='hidden' name='uid' value='{$row['id']}'>
                                     <button class='btn btn-danger' type='submit' name='delete'><i class='bi bi-trash'></i></button>
+                                    <button class='btn btn-primary' type='submit' name='update'><i class='bi bi-pencil'></i></button>
                                 </form>
                             </td>
                         </tr>";
@@ -44,12 +45,16 @@ if(isset($_GET['a'])) {
                 while($row = $result->fetch_assoc()) {
                     
                     echo "<tr class='text-center'>
-                            <td class='fw-bold'>{$i}</td>
+                            <td class='fw-bold'><img class='thumbnail' src='../uploads/teacher/{$row['image']}'></td>
                             <td>{$row['name']}</td>
                             <td>{$row['uid']}</td>
                             <td>".strtoupper($row["department"])."</td>
                             <td class='text-center'>
-                                <span class='me-1 btn btn-danger' onclick='deleteUser({$row['id']})'><i class='bi bi-trash'></i></span>
+                                <form action='' method='POST'>
+                                    <input type='hidden' name='uid' value='{$row['id']}'>
+                                    <button class='btn btn-danger' type='submit' name='delete'><i class='bi bi-trash'></i></button>
+                                    <button class='btn btn-primary' type='submit' name='update'><i class='bi bi-pencil'></i></button>
+                                </form>
                             </td>
                         </tr>";
                     $i++;
