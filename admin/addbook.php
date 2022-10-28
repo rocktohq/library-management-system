@@ -21,7 +21,13 @@ if(isset($_SESSION['error'])) {
 }
 
 if(isset($_COOKIE['lmsadmin'])) {
-    $userid = $_COOKIE['user'];
+    $adminuser = $_COOKIE['lmsadmin'];
+
+    // Admin Role [SupAdmin/Librarian]
+    $sql = "SELECT `role` FROM `admins` WHERE `name` = '$adminuser'";
+    $result = $connect->query($sql);
+    $adrow = $result->fetch_assoc();
+    $adminrole = $adrow['role'];
 
     // Add Book
     if(isset($_POST['add'])) {
@@ -214,6 +220,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                             </div>
                         </div>
                     </li>
+                    <?php if($adminrole == 1) { ?>
                     <!-- Librarian List -->
                     <li>
                         <a class="nav-link px-3" href="librarians.php">
@@ -222,6 +229,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                         </a>
                     </li>
                     <!-- Librarian List -->
+                    <?php } ?>
                     <!-- Requests -->
                     <!-- StudentList -->
                     <li>

@@ -1,3 +1,35 @@
+<?php
+
+/*  #   Library Management System
+	#   Application by Saidul Mursalin
+	#   Design & Developed by Saidul Mursalin
+	#   Contact: facebook/itzmonir
+*/
+
+include 'connect.php';
+// include 'functions/charts.php';
+// include 'functions/counter.php';
+include 'functions/dashboard.php';
+
+
+session_start();
+if(isset($_SESSION['success'])) {
+    $success = $_SESSION['success'];
+}
+if(isset($_SESSION['error'])) {
+    $error = $_SESSION['error'];
+}
+
+if(isset($_COOKIE['lmsadmin'])) {
+    $adminuser = $_COOKIE['lmsadmin'];
+
+    // Admin Role [SupAdmin/Librarian]
+    $sql = "SELECT `role` FROM `admins` WHERE `name` = '$adminuser'";
+    $result = $connect->query($sql);
+    $adrow = $result->fetch_assoc();
+    $adminrole = $adrow['role'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,6 +123,7 @@
                             Management
                         </div>
                     </li>
+                    <?php if($adminrole == 1) { ?>
                     <!-- Librarian List -->
                     <li>
                         <a class="nav-link px-3" href="librarians.php">
@@ -99,6 +132,7 @@
                         </a>
                     </li>
                     <!-- Librarian List -->
+                    <?php } ?>
                     <!-- Requests -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#requests" role="button" aria-expanded="false" aria-controls="requests">
@@ -304,3 +338,5 @@
 </body>
 
 </html>
+
+<?php }
