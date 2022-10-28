@@ -60,8 +60,11 @@ if(ISSET($_POST['login'])) {
     <meta property="og:title" content="Login to SFMU Library">
     <meta property="og:type" content="website">
     <meta property="og:description" content="Login to SFMU Library">
-    <!-- <meta property="og:image" content="https://bdt.netlify.app/assets/images/og-img.png"> -->
     <meta property="og:url" content="http://library.test">
+
+    <!-- PWS -->
+    <link rel="manifest" href="manifest.json">
+    <!-- PWS -->
 
     <!-- ./CSS -->
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
@@ -129,6 +132,7 @@ if(ISSET($_POST['login'])) {
     <!-- ./JS -->
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/jquery-3.6.0.min.js"></script>
+    <script src="./assets/js/pwa.js"></script>
     <script src="./assets/js/main.js"></script>
     <!-- JS./ -->
 </body>

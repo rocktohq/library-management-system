@@ -137,6 +137,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                             Management
                         </div>
                     </li>
+                    <!-- Librarian List -->
+                    <li>
+                        <a class="nav-link px-3" href="librarians.php">
+                            <span class="me-2"><i class="bi bi-person-circle"></i></span>
+                            <span>Librarians</span>
+                        </a>
+                    </li>
+                    <!-- Librarian List -->
                     <!-- Requests -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#requests" role="button" aria-expanded="false" aria-controls="requests">
@@ -221,13 +229,13 @@ if(isset($_COOKIE['lmsadmin'])) {
                                     <li>
                                         <a class="nav-link px-3" href="bookshelves.php">
                                             <span class="me-2"><i class="bi bi-bookshelf"></i></span>
-                                            <span>Bookshelves</span>
+                                            <span>Departments</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="nav-link px-3" href="addbookshelf.php">
                                             <span class="me-2"><i class="bi bi-plus-square"></i></span>
-                                            <span>Add Bookshelves</span>
+                                            <span>Add Department</span>
                                         </a>
                                     </li>
                                     <li class="mx-3">
@@ -306,140 +314,6 @@ if(isset($_COOKIE['lmsadmin'])) {
     <!-- OffCanvas -->
 
     <!-- Main Contents -->
-    <!-- Modals -->
-    <!-- Modal for Delete -->
-    <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalDeleteLabel">Delete Student</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Action can't be undone!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal for Update -->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="modalUpdateLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalUpdateLabel">Update Student Data</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" class="row g3">
-                        <div class="col-sm-6">
-                            <label for="newName" class="form-label">Student Name:</label>
-                            <input type="text" class="form-control" id="newName" placeholder="Student Name" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="newID" class="form-label">Student ID:</label>
-                            <input type="text" class="form-control" id="newID" placeholder="Student ID" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="newDepartment" class="form-label">Department:</label>
-                            <input type="text" class="form-control" id="newDepartment" placeholder="Department" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="newPhone" class="form-label">Phone Number:</label>
-                            <input type="text" class="form-control" id="newPhone" placeholder="Phone Number" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="newImage" class="form-label">Student's Photo</label>
-                            <input class="form-control" type="file" id="newImage">
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="newPassword" class="form-label">Password:</label>
-                            <input type="text" class="form-control" id="newPassword" placeholder="Password" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal for Add -->
-    <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddLabel">Add New Teacher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" class="row g3">
-                        <div class="col-sm-6">
-                            <label for="teacherName" class="form-label">Teacher Name:</label>
-                            <input type="text" class="form-control" id="teacherName" placeholder="Teacher Name" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="teacherID" class="form-label">Teacher ID:</label>
-                            <input type="text" class="form-control" id="teacherID" placeholder="Teacher ID" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="department" class="form-label">Department:</label>
-                            <input type="text" class="form-control" id="department" placeholder="Department" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="phone" class="form-label">Phone Number:</label>
-                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" required>
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="formFile" class="form-label">Teacher's Photo</label>
-                            <input class="form-control" type="file" id="formFile">
-                        </div>
-                        <div class="col-sm-6">
-                            <label for="password" class="form-label">Password:</label>
-                            <input type="text" class="form-control" id="password" placeholder="Password" required>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal for Activity -->
-    <div class="modal fade" id="modalActivity" tabindex="-1" aria-labelledby="modalActivityLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalActivityLabel">Statistics</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-5">
-                            <img src="assets/images/logo.png" class="rounded float-start img-thumbnail" alt="">
-                        </div>
-                        <div class="col-7">
-                            Total Borrowed Books: 23
-                            <br> Prebooked Books: 3
-                            <br> Book Posessed Now: 1
-                            <br> Issued Date: 15-02-2022
-                            <br> Return Date: 26-02-2022
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modals -->
 
     <!-- Teachers Table -->
     <main class="mt-5 pt-3">

@@ -33,6 +33,10 @@ if(isset($_COOKIE['user'])) {
     <link rel="stylesheet" href="./assets/css/style.css">
     <!-- CSS/. -->
 
+    <!-- PWS -->
+    <link rel="manifest" href="manifest.json">
+    <!-- PWS -->
+
     <!-- ./FAVICON -->
     <link rel="shortcut icon" href="./assets/img/book-icon.svg" type="image/x-icon">
     <!-- FAVICON/. -->
@@ -160,6 +164,7 @@ if(isset($_COOKIE['user'])) {
     <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="./assets/js/pwa.js"></script>
     <script src="./assets/js/script.js"></script>
     <script>
         $(document).ready(function() {

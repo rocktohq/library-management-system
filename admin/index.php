@@ -76,6 +76,9 @@ if(isset($_COOKIE['lmsadmin'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <!-- PWS -->
+    <link rel="manifest" href="manifest.json">
+    <!-- PWS -->
 
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
@@ -155,6 +158,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                             Management
                         </div>
                     </li>
+                    <!-- Librarian List -->
+                    <li>
+                        <a class="nav-link px-3" href="librarians.php">
+                            <span class="me-2"><i class="bi bi-person-circle"></i></span>
+                            <span>Librarians</span>
+                        </a>
+                    </li>
+                    <!-- Librarian List -->
                     <!-- Requests -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#requests" role="button" aria-expanded="false" aria-controls="requests">
@@ -535,6 +546,7 @@ if(isset($_COOKIE['lmsadmin'])) {
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="./assets/js/pwa.js"></script>
     <!-- <script src="assets/js/app.js"></script> -->
     <script>
         $(document).ready(function() {

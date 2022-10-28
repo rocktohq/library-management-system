@@ -177,6 +177,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                             </div>
                         </div>
                     </li>
+                    <!-- Librarian List -->
+                    <li>
+                        <a class="nav-link px-3" href="librarians.php">
+                            <span class="me-2"><i class="bi bi-person-circle"></i></span>
+                            <span>Librarians</span>
+                        </a>
+                    </li>
+                    <!-- Librarian List -->
                     <!-- Requests -->
                     <!-- StudentList -->
                     <li>

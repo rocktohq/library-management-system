@@ -23,20 +23,23 @@
         <div class="container-fluid">
 
             <!-- OffCanvas Trigger -->
-            <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><span class="me-1 h3"><i class="bi bi-sliders2"></i></span></button>
+            <button class="navbar-toggler border-0 me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><span class="me-1"><i class="bi bi-sliders2"></i></span></button>
             <!-- OffCanvas Trigger -->
 
-            <a class="navbar-brand fw-bold text-uppercase me-auto" href="#">Library Management System</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+            <a class="navbar-brand fw-bold text-uppercase me-auto" href="index.php">AdminSystem</a>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="h3">
+                <i class="bi bi-list"></i>
+            </span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
                 <!-- Search -->
                 <form class="d-flex ms-auto">
                     <div class="input-group my-3 my-lg-0">
-                        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
-                        <button class="btn btn-primary" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
+                        <input type="search" class="form-control" placeholder="search here..." aria-label="" aria-describedby="button-addon2" name="keywords" id="keywords">
+                        <button class="btn btn-primary" type="button" id="button-addon2" name="search"><i class="bi bi-search"></i></button>
                     </div>
                 </form>
                 <!-- Search -->
@@ -46,12 +49,12 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li><a class="dropdown-item" href="index.html">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="index.php">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                            <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -64,20 +67,20 @@
 
     <!-- OffCanvas -->
     <div class="offcanvas offcanvas-start bg-dark text-white sidebar-nav" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <button type="button" class="text-reset h2 ms-auto p-3 offcanvas-mobile-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-square"></i></button>
+        <button type="button" class="text-reset ms-auto p-3 offcanvas-mobile-close" data-bs-dismiss="offcanvas" aria-label="Close"><i class="bi bi-x-square"></i></button>
 
         <!-- OffCanvas Nav -->
         <div class="offcanvas-body p-0">
             <nav class="navbar-dark">
                 <ul class="navbar-nav">
                     <li class="px-3">
-                        <a class="nav-link active" href="index.html">
+                        <a class="nav-link" href="index.php">
                             <span class="me-2">
-                                <i class="bi bi-speedometer2"></i>
-                            </span>
+                        <i class="bi bi-speedometer2"></i>
+                    </span>
                             <span>
-                                Dashboard
-                            </span>
+                        Dashboard
+                    </span>
                         </a>
                     </li>
                     <li class="my-2">
@@ -88,6 +91,43 @@
                             Management
                         </div>
                     </li>
+                    <!-- Librarian List -->
+                    <li>
+                        <a class="nav-link px-3" href="librarians.php">
+                            <span class="me-2"><i class="bi bi-person-circle"></i></span>
+                            <span>Librarians</span>
+                        </a>
+                    </li>
+                    <!-- Librarian List -->
+                    <!-- Requests -->
+                    <li>
+                        <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#requests" role="button" aria-expanded="false" aria-controls="requests">
+                            <span class="me-2"><i class="bi bi-bell-fill"></i></span>
+                            <span>Requests</span>
+                            <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
+                        </a>
+                        <div class="collapse" id="requests">
+                            <div>
+                                <ul class="navbar-nav px-3">
+                                    <li>
+                                        <a class="nav-link px-3" href="borrow-requests.php">
+                                            <span class="me-2"><i class="bi bi-list-columns-reverse"></i></span>
+                                            <span>Borrow Requests</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="navbar-nav px-3">
+                                    <li>
+                                        <a class="nav-link px-3" href="return-requests.php">
+                                            <span class="me-2"><i class="bi bi-list-columns"></i></span>
+                                            <span>Return Requests</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Requests -->
                     <!-- StudentList -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">
@@ -99,7 +139,7 @@
                             <div>
                                 <ul class="navbar-nav px-3">
                                     <li>
-                                        <a class="nav-link px-3" href="students.html">
+                                        <a class="nav-link px-3" href="students.php">
                                             <span class="me-2"><i class="bi bi-list-columns-reverse"></i></span>
                                             <span>Students List</span>
                                         </a>
@@ -120,7 +160,7 @@
                             <div>
                                 <ul class="navbar-nav px-3">
                                     <li>
-                                        <a class="nav-link px-3" href="teachers.html">
+                                        <a class="nav-link px-3" href="teachers.php">
                                             <span class="me-2"><i class="bi bi-list-columns-reverse"></i></span>
                                             <span>Teachers List</span>
                                         </a>
@@ -141,28 +181,28 @@
                             <div>
                                 <ul class="navbar-nav px-3">
                                     <li>
-                                        <a class="nav-link px-3" href="bookshelves.html">
+                                        <a class="nav-link px-3" href="bookshelves.php">
                                             <span class="me-2"><i class="bi bi-bookshelf"></i></span>
-                                            <span>Bookshelves</span>
+                                            <span>Departments</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="nav-link px-3" href="addbookshelf.html">
+                                        <a class="nav-link px-3" href="addbookshelf.php">
                                             <span class="me-2"><i class="bi bi-plus-square"></i></span>
-                                            <span>Add Bookshelves</span>
+                                            <span>Add Department</span>
                                         </a>
                                     </li>
                                     <li class="mx-3">
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li>
-                                        <a class="nav-link px-3" href="books.html">
+                                        <a class="nav-link px-3" href="books.php">
                                             <span class="me-2"><i class="bi bi-journal-richtext"></i></span>
                                             <span>Books List</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="nav-link px-3" href="addbook.html">
+                                        <a class="nav-link px-3" href="addbook.php">
                                             <span class="me-2"><i class="bi bi-plus-square"></i></span>
                                             <span>Add Book</span>
                                         </a>
@@ -192,13 +232,13 @@
                             <div>
                                 <ul class="navbar-nav px-3">
                                     <li>
-                                        <a class="nav-link px-3" href="topsearched.html">
+                                        <a class="nav-link px-3" href="topsearched.php">
                                             <span class="me-2"><i class="bi bi-journal-album"></i></span>
                                             <span>Top Searched Books</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="nav-link px-3" href="topbooks.html">
+                                        <a class="nav-link px-3" href="topbooks.php">
                                             <span class="me-2"><i class="bi bi-journal-bookmark"></i></span>
                                             <span>Top Borrowed Books</span>
                                         </a>
@@ -210,7 +250,7 @@
                     <!-- Top Books -->
                     <!-- PreBooked -->
                     <li>
-                        <a class="nav-link px-3" href="prebooked.html">
+                        <a class="nav-link active px-3" href="prebooked.php">
                             <span class="me-2"><i class="bi bi-journal-plus"></i></span>
                             <span>Prebooked Books</span>
                         </a>
@@ -228,38 +268,6 @@
     <!-- OffCanvas -->
 
     <!-- Main Contents -->
-    <!-- Modals -->
-    <!-- Modal for Activity -->
-    <div class="modal fade" id="modalActivity" tabindex="-1" aria-labelledby="modalActivityLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalActivityLabel">Prebooked By</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-5">
-                            <img src="assets/images/logo.png" class="rounded float-start img-thumbnail" alt="">
-                        </div>
-                        <div class="col-7">
-                            Name: Saidul
-                            <br> Role: Teacher
-                            <br> Total Borrowed Books: 23
-                            <br> Prebooked Books: 3
-                            <br> Book Posessed Now: 1
-                            <br> Issued Date: 15-02-2022
-                            <br> Return Date: 26-02-2022
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modals -->
 
     <!-- Books Table -->
     <main class="mt-5 pt-3">
@@ -268,85 +276,11 @@
                 <div class="col-md-12 fw-bold fs-3">Prebooked Books</div>
                 <section class="mt-2 px-2">
                     <div class="d-flex justify-content-end mb-4">
-                        <div class="form-outline me-1">
-                            <input data-mdb-search data-mdb-target="#table_inputs" type="text" id="search_table_inputs" class="form-control" placeholder="Search Book">
-                        </div>
+                    </div>
+                    <div class="">
+                        <h1 class="text-center fw-bold text-danger mt-5">Feature isn't available right now!</h1>
                     </div>
                 </section>
-                <table class="table table-hover table-bordered cursor-pointer">
-                    <thead>
-                        <tr>
-                            <th><span class="text-danger fw-bold">#</span></th>
-                            <th>Name</th>
-                            <th>Book ID</th>
-                            <th>Course Code</th>
-                            <th>Department</th>
-                            <th>By</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="text-danger fw-bold">1</span></td>
-                            <td>Algorithm Analysis & Design</td>
-                            <td>101</td>
-                            <td>CSE-301</td>
-                            <td>CSE</td>
-                            <td class="text-center cursor-pointer">
-                                <span data-bs-toggle="modal" data-bs-target="#modalActivity">Saidul</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="text-danger fw-bold">2</span></td>
-                            <td>Graphics Design</td>
-                            <td>102</td>
-                            <td>CSE-201</td>
-                            <td>CSE</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="modal" data-bs-target="#modalActivity">Saidul</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="text-danger fw-bold">3</span></td>
-                            <td>C Programming</td>
-                            <td>103</td>
-                            <td>CSE-101</td>
-                            <td>CSE</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="modal" data-bs-target="#modalActivity">Saidul</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="text-danger fw-bold">4</span></td>
-                            <td>NUmerical Analysis</td>
-                            <td>104</td>
-                            <td>CSE-202</td>
-                            <td>BBA</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="modal" data-bs-target="#modalActivity">Saidul</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="text-danger fw-bold">5</span></td>
-                            <td>Industrial Management</td>
-                            <td>105</td>
-                            <td>BBA-105</td>
-                            <td>BBA</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="modal" data-bs-target="#modalActivity">Saidul</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><span class="text-danger fw-bold">6</span></td>
-                            <td>English Literature</td>
-                            <td>106</td>
-                            <td>Eng-202</td>
-                            <td>BBA</td>
-                            <td class="text-center">
-                                <span data-bs-toggle="modal" data-bs-target="#modalActivity">Saidul</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </main>

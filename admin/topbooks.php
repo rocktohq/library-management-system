@@ -112,6 +112,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                             Management
                         </div>
                     </li>
+                    <!-- Librarian List -->
+                    <li>
+                        <a class="nav-link px-3" href="librarians.php">
+                            <span class="me-2"><i class="bi bi-person-circle"></i></span>
+                            <span>Librarians</span>
+                        </a>
+                    </li>
+                    <!-- Librarian List -->
                     <!-- Requests -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#requests" role="button" aria-expanded="false" aria-controls="requests">
@@ -196,13 +204,13 @@ if(isset($_COOKIE['lmsadmin'])) {
                                     <li>
                                         <a class="nav-link px-3" href="bookshelves.php">
                                             <span class="me-2"><i class="bi bi-bookshelf"></i></span>
-                                            <span>Bookshelves</span>
+                                            <span>Departments</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="nav-link px-3" href="addbookshelf.php">
                                             <span class="me-2"><i class="bi bi-plus-square"></i></span>
-                                            <span>Add Bookshelves</span>
+                                            <span>Add Department</span>
                                         </a>
                                     </li>
                                     <li class="mx-3">

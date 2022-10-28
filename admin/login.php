@@ -55,7 +55,7 @@ if(ISSET($_POST['login'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Login</title>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -64,6 +64,7 @@ if(ISSET($_POST['login'])) {
     <link rel="stylesheet" href="assets/css/app.css">
 
     <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -110,9 +111,7 @@ if(ISSET($_POST['login'])) {
     <!-- JavaScripts -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/jquery.dataTables.min.js"></script>
-    <script src="assets/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+    <script src="./assets/js/pwa.js"></script>
     <script src="assets/js/app.js"></script>
     <!-- JavaScripts -->
 

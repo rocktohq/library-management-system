@@ -58,7 +58,7 @@ function departmentList() {
     echo "<ul>";
     foreach($departments as $department) {
         echo "<li class='department'>
-            <a href='departments.php?name={$department->name}' class='button text-uppercase'>{$department->name}</a>
+            <a href='departments.php?name={$department->department}' class='button text-uppercase'>{$department->department}</a>
         </li>";
     }
     echo "</ul>";

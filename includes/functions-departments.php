@@ -13,14 +13,14 @@ function departmentList($departmentName) {
     echo "<ul>";
     foreach($departments as $department) {
         // Active Class
-        if($departmentName == strtolower($department->name)) {
+        if($departmentName == strtolower($department->department)) {
             $activeClass = " active ";
         } else {
             $activeClass = " ";
         }
 
         echo "<li class='department'>
-            <a href='departments.php?name={$department->name}' class='button{$activeClass}text-uppercase'>{$department->name}</a>
+            <a href='departments.php?name={$department->department}' class='button{$activeClass}text-uppercase'>{$department->department}</a>
         </li>";
     }
     echo "</ul>";
