@@ -1,7 +1,7 @@
 <?php
 
 function bookName($bookId) {
-    require 'dbCon.php';
+    require '../includes/dbCon.php';
 
     // Query to Feth the Book Details
     $sql = "SELECT * FROM `books` WHERE `id` = ?";
@@ -16,7 +16,7 @@ function bookName($bookId) {
 }
 
 function bookDept($bookId) {
-    require 'dbCon.php';
+    require '../includes/dbCon.php';
 
     // Query to Feth the Book Details
     $sql = "SELECT * FROM `books` WHERE `id` = ?";
@@ -30,7 +30,7 @@ function bookDept($bookId) {
     }
 }
 
-include 'connect.php';
+include '../includes/connect.php';
 
 if(isset($_GET['a'])) {
 

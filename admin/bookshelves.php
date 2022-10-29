@@ -6,7 +6,7 @@
 	#   Contact: facebook/itzmonir
 */
 
-include 'connect.php';
+include '../includes/connect.php';
 // include 'functions/charts.php';
 // include 'functions/counter.php';
 include 'functions/dashboard.php';
@@ -357,7 +357,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                 <section class="mt-2 px-2">
                 <div class="d-flex justify-content-end mb-4">
                         <div class="form-outline me-1">
-                            <input type="text" placeholder="Search Book" class="form-control" id="search">
+                            <input type="text" placeholder="Search Department" class="form-control" id="search">
                         </div>
                         <a href="addbookshelf.php"><span class="btn btn-primary me-1">
                             <i class="bi bi-plus"></i>

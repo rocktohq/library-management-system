@@ -1,6 +1,6 @@
 <?php
 function studentsStat() {
-    include '../connect.php';
+    include '../../includes/connect.php';
 
     $query = "SELECT
                 department as department,

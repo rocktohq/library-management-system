@@ -1,6 +1,6 @@
 <?php
 
-include 'connect.php';
+include '../includes/connect.php';
 
 if(isset($_GET['a'])) {
 

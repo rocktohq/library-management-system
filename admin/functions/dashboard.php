@@ -1,6 +1,6 @@
 <?php
 
 function bookRequests() {
-    include '../connect.php';
+    include '../../includes/connect.php';
 
 }

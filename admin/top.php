@@ -2,7 +2,7 @@
 // Top Books
 function topBookDetails($book_code, $i)
 {
-    include 'connect.php';
+    include '../includes/connect.php';
 
     $sql = "SELECT * FROM `books` WHERE `book_code` = '$book_code'";
     $result = $connect->query($sql);
@@ -20,7 +20,7 @@ function topBookDetails($book_code, $i)
 }
 function topBorrowedBooks() 
 {
-    include 'connect.php';
+    include '../includes/connect.php';
 
     $sql = "SELECT `book_code`,
                 COUNT(id) AS `total`

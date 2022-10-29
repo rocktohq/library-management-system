@@ -36,6 +36,14 @@ CREATE TABLE `admins` (
   `created_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`id`, `name`, `department`, `role`, `password`, `created_at`) VALUES
+(1, 'admin', 'Administration', 1, '$2y$10$1.jfguMB74vJUn.nzyb/BO1cPAx/T1bL14xfk.UDYPpfTrdmc1CAe', '2022-06-10 12:18:41');
+
+
 -- --------------------------------------------------------
 
 --

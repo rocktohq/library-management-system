@@ -6,7 +6,7 @@
 	#   Contact: facebook/itzmonir
 */
 
-include 'connect.php';
+include '../includes/connect.php';
 // include 'functions/charts.php';
 // include 'functions/counter.php';
 include 'functions/dashboard.php';
@@ -258,13 +258,13 @@ if(isset($_COOKIE['lmsadmin'])) {
                                     <li>
                                         <a class="nav-link px-3" href="bookshelves.php">
                                             <span class="me-2"><i class="bi bi-bookshelf"></i></span>
-                                            <span>Bookshelves</span>
+                                            <span>Departments</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a class="nav-link px-3" href="addbookshelf.php">
                                             <span class="me-2"><i class="bi bi-plus-square"></i></span>
-                                            <span>Add Bookshelf</span>
+                                            <span>Add Department</span>
                                         </a>
                                     </li>
                                     <li class="mx-3">

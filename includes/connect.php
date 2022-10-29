@@ -1,11 +1,14 @@
 <?php
 
-/*
-* Application developed by Saidul Mursalin
-* Database connection configuration
+/*  
+  # Library Management System
+	#	Application by Saidul Mursalin
+	#	Design & Developed by Saidul Mursalin
+	#	Contact: facebook/itzmonir
 */
 
-// DB Information
+# Database Configuration
+// Database Information
 $host = 'localhost';        // Host Name
 $dbName = 'library';       // Database Name
 $dbUser = 'library';       // Database Username

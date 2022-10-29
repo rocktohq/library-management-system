@@ -6,7 +6,7 @@
 	#   Contact: facebook/itzmonir
 */
 
-include 'connect.php';
+include '../includes/connect.php';
 // include 'functions/charts.php';
 // include 'functions/counter.php';
 include 'functions/dashboard.php';

@@ -6,7 +6,7 @@
 	#   Contact: facebook/itzmonir
 */
 
-include 'connect.php';
+include '../includes/connect.php';
 // include 'functions/charts.php';
 // include 'functions/counter.php';
 include 'functions/dashboard.php';
@@ -47,7 +47,7 @@ if(isset($_COOKIE['lmsadmin'])) {
             if(!empty($filename)) {
                 $tempname = $_FILES["photo"]["tmp_name"];
                 $imageFileType = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-                $folder = "../uploads/profile/";
+                $folder = "../uploads/admin/";
                 $photo =  uniqid() . ".". $imageFileType;
                 $check = getimagesize($tempname);
     
@@ -403,7 +403,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                             <div class="mt-5">
                                 <div class="col-md-10 mb-2">
                                     <label for="name" class="form-label">User Name:</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Student Name" required>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="ex: librarian" required>
                                 </div>
                                 <div class="col-md-10 mb-2">
                                     <label for="department" class="form-label">Department:</label>
@@ -415,7 +415,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                                 </div>
                             </div>
                             <div class="mt-2">
-                                <button name="add" type="submit" class="btn btn-primary text-uppercase">Add Student</button>
+                                <button name="add" type="submit" class="btn btn-primary text-uppercase">Add Librarian</button>
                             </div>
                         </form>
                     </div>
