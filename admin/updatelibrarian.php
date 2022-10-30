@@ -202,7 +202,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <?php if($adminrole == 1) { ?>
                     <!-- Librarian List -->
                     <li>
-                        <a class="nav-link px-3" href="librarians.php">
+                        <a class="nav-link active px-3" href="librarians.php">
                             <span class="me-2"><i class="bi bi-person-circle"></i></span>
                             <span>Librarians</span>
                         </a>
@@ -238,6 +238,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                         </div>
                     </li>
                     <!-- Requests -->
+                    <!-- List -->
+                    <li>
+                        <a class="nav-link px-3" href="borrowlist.php">
+                            <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                            <span>Borrow List</span>
+                        </a>
+                    </li>
+                    <!-- List -->
                     <!-- StudentList -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">

@@ -203,6 +203,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                         </div>
                     </li>
                     <!-- Requests -->
+                    <!-- List -->
+                    <li>
+                        <a class="nav-link px-3" href="borrowlist.php">
+                            <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                            <span>Borrow List</span>
+                        </a>
+                    </li>
+                    <!-- List -->
                     <!-- StudentList -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">
@@ -501,9 +509,13 @@ if(isset($_COOKIE['lmsadmin'])) {
                         <div class="card text-white bg-success h-100 card-stats">
                             <div class="card-header">Total Books</div>
                             <div class="card-body card-total border-5 border-light">
-                                <p class="card-text text-center fs-sum fw-bold counter"><?php $query = "SELECT * FROM `books`";
+                                <p class="card-text text-center fs-sum fw-bold counter"><?php $query = "SELECT SUM(book_quantity) AS `sum` FROM `books`";
                                 $result = $connect->query($query);
-                                echo $result->num_rows; ?></p>
+
+                                if($result->num_rows > 0) {
+                                    $row = $result->fetch_assoc();
+                                    echo $count = $row['sum'];
+                                } ?></p>
                             </div>
                         </div>
                     </div>

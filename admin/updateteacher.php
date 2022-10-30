@@ -253,6 +253,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                         </div>
                     </li>
                     <!-- Requests -->
+                    <!-- List -->
+                    <li>
+                        <a class="nav-link px-3" href="borrowlist.php">
+                            <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                            <span>Borrow List</span>
+                        </a>
+                    </li>
+                    <!-- List -->
                     <!-- StudentList -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">

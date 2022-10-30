@@ -128,7 +128,7 @@ if(isset($_COOKIE['lmsadmin'])) {
             <nav class="navbar-dark">
                 <ul class="navbar-nav">
                     <li class="px-3">
-                        <a class="nav-link active" href="index.php">
+                        <a class="nav-link" href="index.php">
                             <span class="me-2">
                         <i class="bi bi-speedometer2"></i>
                     </span>
@@ -184,6 +184,14 @@ if(isset($_COOKIE['lmsadmin'])) {
                         </div>
                     </li>
                     <!-- Requests -->
+                    <!-- List -->
+                    <li>
+                        <a class="nav-link px-3" href="borrowlist.php">
+                            <span class="me-2"><i class="bi bi-book-fill"></i></span>
+                            <span>Borrow List</span>
+                        </a>
+                    </li>
+                    <!-- List -->
                     <!-- StudentList -->
                     <li>
                         <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#studentList" role="button" aria-expanded="false" aria-controls="studentList">

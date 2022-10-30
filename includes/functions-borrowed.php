@@ -5,8 +5,9 @@ function borrowList($userid) {
     require 'dbCon.php';
 
     $confirmed = 1;
+    $orderby = "borrowed_date";
     // Query to Feth the Book Details
-    $sql = "SELECT * FROM `borrows` WHERE `borrowed_by` = ? AND `confirmed` = ?";
+    $sql = "SELECT * FROM `borrows` WHERE `borrowed_by` = ? AND `confirmed` = ? ORDER BY ".$orderby ." DESC";
     $query = $conn->prepare($sql);
     $query->execute([$userid, $confirmed]);
     $books = $query->fetchAll();
@@ -14,12 +15,18 @@ function borrowList($userid) {
 
     foreach($books as $book) {
 
+        $return_date = new DateTime($book->return_date);
+        $borrow_date = new DateTime($book->borrowed_date);
+
+        $return_date = date_format($return_date,"d M Y");
+        $borrow_date = date_format($borrow_date,"d M Y");
+
         echo "<tr><td>{$i}</td><td>";      
         echo boookName($book->book_code);
         echo "</td><td class='text-uppercase'>{$book->book_code}</td><td>";
-        echo $book->borrowed_date;
+        echo $borrow_date;
         echo "</td><td>";
-        echo $book->return_date;
+        echo $return_date;
         echo "</td><td>";
 
         if($book->returned) {
@@ -52,13 +59,18 @@ function notConfirmed($userid) {
 
     foreach($books as $book) {
 
+        $return_date = new DateTime($book->return_date);
+        $borrow_date = new DateTime($book->borrowed_date);
+
+        $return_date = date_format($return_date,"d M Y");
+        $borrow_date = date_format($borrow_date,"d M Y");
 
         echo "<tr><td>{$i}</td><td>";      
         echo boookName($book->book_code);
         echo "</td><td class='text-uppercase'>{$book->book_code}</td><td>";
-        echo $book->borrowed_date;
+        echo $borrow_date;
         echo "</td><td>";
-        echo "Estimated: {$book->return_date}";
+        echo "Estimated: {$return_date}";
         echo "</td><td>";
         echo "Not Confirmed
         </td></tr>";

@@ -11,7 +11,6 @@ include '../includes/connect.php';
 // include 'functions/counter.php';
 include 'functions/dashboard.php';
 
-
 session_start();
 if(isset($_SESSION['success'])) {
     $success = $_SESSION['success'];
@@ -29,7 +28,30 @@ if(isset($_COOKIE['lmsadmin'])) {
     $adrow = $result->fetch_assoc();
     $adminrole = $adrow['role'];
 
+    // Request
+    if(isset($_POST['approve'])) {
+        $book_id = $_POST['book_id'];
+        $issued_date = Date('Y-m-d', time());
+        $return_date = Date('Y-m-d', strtotime('+10 days'));
+
+        $sql = "UPDATE 
+                    `borrows` 
+                SET 
+                    `confirmed`='1', `borrowed_date` = '$issued_date', `return_date` = '$return_date' 
+                WHERE 
+                    `id` = '$book_id'";
+        $result = $connect->query($sql);
+        if($result) {
+            $_SESSION['success'] = "Book Confirmed";
+            header("Location: borrow-requests.php");
+        } else {
+            $_SESSION['error'] = "Error Confirming Book!";
+            header("Location: borrow-requests.php");
+        }
+    }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +60,7 @@ if(isset($_COOKIE['lmsadmin'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Searched Books</title>
+    <title>Borrow List</title>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -70,8 +92,8 @@ if(isset($_COOKIE['lmsadmin'])) {
                 <!-- Search -->
                 <form class="d-flex ms-auto">
                     <div class="input-group my-3 my-lg-0">
-                        <input type="search" class="form-control" placeholder="search here..." aria-label="" aria-describedby="button-addon2" name="keywords" id="keywords">
-                        <button class="btn btn-primary" type="button" id="button-addon2" name="search"><i class="bi bi-search"></i></button>
+                        <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon2">
+                        <button class="btn btn-primary" type="button" id="button-addon2"><i class="bi bi-search"></i></button>
                     </div>
                 </form>
                 <!-- Search -->
@@ -164,7 +186,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
-                        <a class="nav-link px-3" href="borrowlist.php">
+                        <a class="nav-link active px-3" href="borrowlist.php">
                             <span class="me-2"><i class="bi bi-book-fill"></i></span>
                             <span>Borrow List</span>
                         </a>
@@ -265,7 +287,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     </li>
                     <!-- Top Books -->
                     <li>
-                        <a class="nav-link active px-3 sidebar-link" data-bs-toggle="collapse" href="#topBooks" role="button" aria-expanded="false" aria-controls="topBooks">
+                        <a class="nav-link px-3 sidebar-link" data-bs-toggle="collapse" href="#topBooks" role="button" aria-expanded="false" aria-controls="topBooks">
                             <span class="me-2"><i class="bi bi-journals"></i></span>
                             <span>Top Books</span>
                             <span class="right-icon ms-auto"><i class="bi bi-chevron-down"></i></span>
@@ -274,7 +296,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                             <div>
                                 <ul class="navbar-nav px-3">
                                     <li>
-                                        <a class="nav-link active px-3" href="topsearched.php">
+                                        <a class="nav-link px-3" href="topsearched.php">
                                             <span class="me-2"><i class="bi bi-journal-album"></i></span>
                                             <span>Top Searched Books</span>
                                         </a>
@@ -310,93 +332,83 @@ if(isset($_COOKIE['lmsadmin'])) {
     <!-- OffCanvas -->
 
     <!-- Main Contents -->
-
-    <!-- Top Searched Books -->
     <main class="mt-5 pt-3">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12 fw-bold fs-3">Top Searched Books</div>
 
-                <section class="my-3">
-                </section>
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered cursor-pointer col-sm-12">
-                        <thead class="table-primary">
-                            <tr class="text-center">
-                                <th>#</th>
-                                <th>Book Name</th>
-                                <th>Department</th>
-                                <th>Totals Hits</th>
-                            </tr>
-                        </thead>
-                        <tbody id="showlist">
-                        </tbody>
-                    </table>
+            <!-- Librarian Notifications -->
+            <div class="row mt-5">
+                <div class="col-md-12 mb-4">
+                    <div class="card text-dark bg-default h-100">
+                        <div class="card-header fw-bold">Borrow List</div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class='table table-hover table-bordered cursor-pointer col-sm-12'>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Student ID</th>
+                                            <th>Student Phone</th>
+                                            <th>Book Code</th>
+                                            <th>Borrow Date</th>
+                                            <th>Return Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                            <?php
+                            $i = 1;
+
+                            $sql = "SELECT * FROM `borrows` WHERE `confirmed` = 1 AND `returned` = 0 ORDER BY `borrowed_date` DESC";
+                            $result = $connect->query($sql);
+                            if($result->num_rows) {
+                                while($row = $result->fetch_assoc()) {
+
+                                    $return_date = new DateTime($row['return_date']);
+                                    $borrow_date = new DateTime($row['borrowed_date']);
+
+                                    $return_date = date_format($return_date,"d M Y");
+                                    $borrow_date = date_format($borrow_date,"d M Y");
+                                    echo "
+                                            <tr>
+                                                <td>{$i}</td>
+                                                <td>{$row['borrowed_by']}</td>
+                                                <td>";
+                                            echo studentPhone($row['borrowed_by']);
+                                            echo "</td>
+                                                <td class='text-uppercase'>{$row['book_code']}</td>
+                                                <td>{$borrow_date}</td>
+                                                <td>{$return_date}</td>
+                                            </tr>";
+                                    $i++;
+                                }
+                            } else {
+                                echo "<tr><td colspan='4' class='text-center'>No request found!</td></tr>";
+                            }
+                            ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- Librarian Notifications -->
+
         </div>
     </main>
-    <!-- Top Searched Books -->
     <!-- Main Contents -->
 
     <!-- Footer -->
-    <footer class="">
-        <div class="dev">
-            <p class="text-center">Design & Developed by <span class="highlight">Saidul Mursalin</span>. Supervised by <span class="highlight">Fazle Rabbi Rushu</span></p>
-        </div>
-    </footer>
+    <?php include './functions/footer.php'; ?>
     <!-- Footer -->
 
     <!-- JavaScripts -->
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <script>
-        $(document).ready(function() {
-            // $('#studentList').show();
-            $(".toast").toast('show');
-            displayData();
 
-            $("#search").keyup(function(){
-                let searchdata = $("#search").val();
-                if(!searchdata) {
-                    displayData();
-                }
-                else {
-                    $.ajax({
-                        type:'POST',
-                        url:'ts.php?a=search',
-                        data:{
-                            name:searchdata,
-                        },
-                        success:function(data){
-                            $("#showlist").html(data);
-                        }
-                    });
-                }
-            });
-        });
-
-        // Display Data
-        function displayData() {
-                let displayData = true;
-                $.ajax({
-                    url: "ts.php?a=showlist",
-                    type: "post",
-                    data: {
-                        displayData: displayData
-                    },
-                    success: function(data, status) {
-                        $('#showlist').html(data);
-                    }
-                });
-            }
-
-    </script>
 </body>
 
 </html>
-
 <?php
 } else {
     header("Location: login.php");
