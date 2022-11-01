@@ -103,8 +103,8 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="changepass.php">Change Password</a></li>
+                            <li><a class="dropdown-item" href="index.php">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -186,6 +186,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
+                        <a class="nav-link px-3" href="manual.php">
+                            <span class="me-2"><i class="bi bi-clipboard-plus"></i></span>
+                            <span>Lend Book Manually</span>
+                        </a>
                         <a class="nav-link active px-3" href="borrowlist.php">
                             <span class="me-2"><i class="bi bi-book-fill"></i></span>
                             <span>Borrow List</span>
@@ -346,8 +350,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Student ID</th>
-                                            <th>Student Phone</th>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Phone</th>
                                             <th>Book Code</th>
                                             <th>Borrow Date</th>
                                             <th>Return Date</th>
@@ -367,13 +373,20 @@ if(isset($_COOKIE['lmsadmin'])) {
 
                                     $return_date = date_format($return_date,"d M Y");
                                     $borrow_date = date_format($borrow_date,"d M Y");
+
+                                    // Member Type
+                                    if($row['user_role'] == 0) {
+                                        $type = "Student";
+                                    } elseif($row['user_role'] == 3) {
+                                        $type = "Teacher";
+                                    }
                                     echo "
                                             <tr>
                                                 <td>{$i}</td>
                                                 <td>{$row['borrowed_by']}</td>
-                                                <td>";
-                                            echo studentPhone($row['borrowed_by']);
-                                            echo "</td>
+                                                <td>{$row['user_name']}</td>
+                                                <td>{$type}</td>
+                                                <td>{$row['user_phone']}</td>
                                                 <td class='text-uppercase'>{$row['book_code']}</td>
                                                 <td>{$borrow_date}</td>
                                                 <td>{$return_date}</td>

@@ -11,6 +11,16 @@ include '../includes/connect.php';
 // include 'functions/counter.php';
 include 'functions/dashboard.php';
 
+// Session
+session_start();
+if(isset($_SESSION['success'])) {
+    $success = $_SESSION['success'];
+}
+if(isset($_SESSION['error'])) {
+    $error = $_SESSION['error'];
+}
+
+// If Admin
 if(isset($_COOKIE['lmsadmin'])) {
     $adminuser = $_COOKIE['lmsadmin'];
 
@@ -122,8 +132,8 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="changepass.php">Change Password</a></li>
+                            <li><a class="dropdown-item" href="index.php">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -205,6 +215,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
+                        <a class="nav-link px-3" href="manual.php">
+                            <span class="me-2"><i class="bi bi-clipboard-plus"></i></span>
+                            <span>Lend Book Manually</span>
+                        </a>
                         <a class="nav-link px-3" href="borrowlist.php">
                             <span class="me-2"><i class="bi bi-book-fill"></i></span>
                             <span>Borrow List</span>
@@ -360,6 +374,24 @@ if(isset($_COOKIE['lmsadmin'])) {
             <!-- Librarian Notifications -->
             <!-- Borrow Requests -->
             <div class="row">
+            <?php
+                if(isset($success)) {
+                    echo "<div class='col-md-12'><div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <span class='text-success'><i class='bi bi-check-circle-fill'></i></span> <span>{$success}</span>
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div></div>";
+                    unset($_SESSION['success']);
+                }
+                ?>
+                <?php
+                if(isset($error)) {
+                    echo "<div class='col-md-12'><div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <span class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i></span> <span>{$error}</span>
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div></div>";
+                    unset($_SESSION['error']);
+                }
+                ?>
                 <div class="col-md-6 mb-4">
                     <div class="card text-dark bg-default h-100">
                         <div class="card-header fw-bold">Book Lending Requests</div>
@@ -388,9 +420,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                                                 <td>{$row['borrowed_by']}</td>
                                                 <td class='text-uppercase'>{$row['book_code']}</td>
                                                 <td class='text-center'>
-                                                    <form action='borrow-requests.php' method='POST'>
+                                                    <form action='decline.php' method='POST'>
                                                         <input type='hidden' name='book_id' value='{$row['id']}'>
-                                                        <button class='btn btn-success' type='submit' name='approve'>Approve</button>
+                                                        <button class='btn btn-success' type='submit' name='approve'><i class='bi bi-check-lg'></i></button>
+                                                        <button class='btn btn-danger' type='submit' name='decline'><i class='bi bi-x-lg'></i></button>
                                                     </form>
                                                 </td>
                                             </tr>";
@@ -439,7 +472,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                                         
                                     FROM
                                         returns
-                                    INNER JOIN borrows ON returns.borrowed_by = borrows.borrowed_by AND borrows.confirmed = 1 AND borrows.returned = 0 ORDER BY id LIMIT 5";
+                                    INNER JOIN borrows ON returns.borrowed_by = borrows.borrowed_by AND borrows.confirmed = 1 AND borrows.returned = 0 ORDER BY `created_at` LIMIT 5";
                             $result = $connect->query($sql);
                             if($result->num_rows) {
                                 while($row = $result->fetch_assoc()) {

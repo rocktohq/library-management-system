@@ -47,7 +47,7 @@ if(isset($_COOKIE['user'])) {
     <!-- ./HEADER  -->
     <header class="header">
         <div class="header-1">
-            <a href="/" class="logo"> <i class="fas fa-book"></i> LIBRARY </a>
+            <a href="index.php" class="logo"> <i class="fas fa-book"></i> LIBRARY </a>
             <form action="search-r.php" class="search-form">
                 <input type="search" name="keywords" placeholder="search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>

@@ -8,7 +8,7 @@ if(isset($_GET['a'])) {
     if($_GET['a'] === 'showlist') {
         if(isset($_POST['displayData'])) {
             $i = 1;
-            $sql = "SELECT * FROM `students`";
+            $sql = "SELECT * FROM `students` WHERE `year` != 0";
             $result = $connect->query($sql);
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()) {
@@ -51,7 +51,7 @@ if(isset($_GET['a'])) {
             $i = 1;
             $sql = "SELECT * FROM `students` WHERE `name` LIKE '%".$_POST['name']."%' OR `uid` LIKE '%".$_POST['name']."%'";
             $result = $connect->query($sql);
-            if($result->num_rows > 0){
+            if($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
 
                     if($row['batch'] < 10) {
@@ -60,24 +60,27 @@ if(isset($_GET['a'])) {
                         $batch = $row['batch'];
                     }
                     
-                    echo "<tr class='text-center'>
-                            <td class='fw-bold'>{$i}</td>
-                            <td>{$row['name']}</td>
-                            <td>{$row['uid']}</td>
-                            <td>".strtoupper($row["department"])."</td>
-                            <td>{$batch}</td>
-                            <td>{$row['year']}</td>
-                            <td>{$row['semester']}</td>
+                    if($row['year']) {
+                    
+                        echo "<tr class='text-center'>
+                                <td class='fw-bold'>{$i}</td>
+                                <td>{$row['name']}</td>
+                                <td>{$row['uid']}</td>
+                                <td>".strtoupper($row["department"])."</td>
+                                <td>{$batch}</td>
+                                <td>{$row['year']}</td>
+                                <td>{$row['semester']}</td>
 
-                            <td class='text-center'>
-                                <form action='' method='POST'>
-                                    <input type='hidden' name='uid' value='{$row['id']}'>
-                                    <button class='btn btn-danger' type='submit' name='delete'><i class='bi bi-trash'></i></button>
-                                    <button class='btn btn-primary' type='submit' name='update'><i class='bi bi-pencil'></i></button>
-                                </form>
-                            </td>
-                        </tr>";
-                    $i++;
+                                <td class='text-center'>
+                                    <form action='' method='POST'>
+                                        <input type='hidden' name='uid' value='{$row['id']}'>
+                                        <button class='btn btn-danger' type='submit' name='delete'><i class='bi bi-trash'></i></button>
+                                        <button class='btn btn-primary' type='submit' name='update'><i class='bi bi-pencil'></i></button>
+                                    </form>
+                                </td>
+                            </tr>";
+                        $i++;
+                    }
                 }
             }
             else{

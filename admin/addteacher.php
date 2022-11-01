@@ -154,7 +154,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="settings.php">Settings</a></li>
+                            <li><a class="dropdown-item" href="changepass.php">Change Password</a></li>
                             <li><a class="dropdown-item" href="index.php">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
@@ -237,6 +237,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
+                        <a class="nav-link px-3" href="manual.php">
+                            <span class="me-2"><i class="bi bi-clipboard-plus"></i></span>
+                            <span>Lend Book Manually</span>
+                        </a>
                         <a class="nav-link px-3" href="borrowlist.php">
                             <span class="me-2"><i class="bi bi-book-fill"></i></span>
                             <span>Borrow List</span>

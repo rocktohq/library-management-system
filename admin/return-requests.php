@@ -31,13 +31,16 @@ if(isset($_COOKIE['lmsadmin'])) {
     // Request
     if(isset($_POST['confirm'])) {
         $book_id = $_POST['book_id'];
+        $reid = $_POST['reid'];
 
-        $sql = "UPDATE 
+        echo $sql = "UPDATE 
                     `borrows`
                 SET
                     `returned`='1'
                 WHERE
                     `id` = '$book_id'";
+        $result = $connect->query($sql);
+        $sql = "DELETE FROM `returns` WHERE `id` = '$reid'";
         $result = $connect->query($sql);
         if($result) {
             $_SESSION['success'] = "Book Returned";
@@ -103,8 +106,8 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="changepass.php">Change Password</a></li>
+                            <li><a class="dropdown-item" href="index.php">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -186,6 +189,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
+                        <a class="nav-link px-3" href="manual.php">
+                            <span class="me-2"><i class="bi bi-clipboard-plus"></i></span>
+                            <span>Lend Book Manually</span>
+                        </a>
                         <a class="nav-link px-3" href="borrowlist.php">
                             <span class="me-2"><i class="bi bi-book-fill"></i></span>
                             <span>Borrow List</span>
@@ -381,6 +388,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                             $i = 1;
 
                             $sql = "SELECT
+                                        returns.id as `reid`,
                                         returns.book_code,
                                         returns.borrowed_date,
                                         returns.borrowed_by,
@@ -402,6 +410,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                                                 <td class='text-center'>
                                                     <form action='' method='POST'>
                                                         <input type='hidden' name='book_id' value='{$row['id']}'>
+                                                        <input type='hidden' name='reid' value='{$row['reid']}'>
                                                         <button class='btn btn-success' type='submit' name='confirm'>Confirm</button>
                                                     </form>
                                                 </td>

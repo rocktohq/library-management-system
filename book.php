@@ -23,6 +23,14 @@ if(isset($_SESSION['error'])) {
 if(isset($_COOKIE['user'])) {
    
     $userid = $_COOKIE['user'];
+    // User Information
+    $sql = "SELECT `name`, `phone`, `role` FROM `students` WHERE `uid` = '$userid' 
+            UNION SELECT `name`, `phone`, `role` FROM `teachers` WHERE `uid` = '$userid'";
+        $result = $connect->query($sql);
+        $row = $result->fetch_assoc();
+        $user_name = $row['name'];
+        $user_phone = $row['phone'];
+        $user_role = $row['role'];
 
     if(isset($_GET['id'])) {
         $bookId = $_GET['id'];
@@ -72,11 +80,17 @@ if(isset($_COOKIE['user'])) {
             $sql = "INSERT INTO `borrows`(
                 `book_code`,
                 `borrowed_by`,
+                `user_name`,
+                `user_phone`,
+                `user_role`,
                 `return_date`
             )
             VALUES(
                 '$book_code',
                 '$userid',
+                '$user_name',
+                '$user_phone',
+                '$user_role',
                 '$return_date'
             )";
             $result = $connect->query($sql);

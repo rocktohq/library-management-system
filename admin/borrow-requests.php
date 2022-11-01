@@ -28,7 +28,7 @@ if(isset($_COOKIE['lmsadmin'])) {
     $adrow = $result->fetch_assoc();
     $adminrole = $adrow['role'];
 
-    // Request
+    // Aprove
     if(isset($_POST['approve'])) {
         $book_id = $_POST['book_id'];
         $issued_date = Date('Y-m-d', time());
@@ -46,6 +46,24 @@ if(isset($_COOKIE['lmsadmin'])) {
             header("Location: borrow-requests.php");
         } else {
             $_SESSION['error'] = "Error Confirming Book!";
+            header("Location: borrow-requests.php");
+        }
+    }
+
+    // Decline
+    if(isset($_POST['decline'])) {
+        $book_id = $_POST['book_id'];
+
+        $sql = "DELETE FROM 
+                    `borrows` 
+                WHERE 
+                    `id` = '$book_id'";
+        $result = $connect->query($sql);
+        if($result) {
+            $_SESSION['success'] = "Book Declined";
+            header("Location: borrow-requests.php");
+        } else {
+            $_SESSION['error'] = "Error Declining Book!";
             header("Location: borrow-requests.php");
         }
     }
@@ -103,8 +121,8 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i></a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+                            <li><a class="dropdown-item" href="changepass.php">Change Password</a></li>
+                            <li><a class="dropdown-item" href="index.php">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -186,6 +204,10 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
+                        <a class="nav-link px-3" href="manual.php">
+                            <span class="me-2"><i class="bi bi-clipboard-plus"></i></span>
+                            <span>Lend Book Manually</span>
+                        </a>
                         <a class="nav-link px-3" href="borrowlist.php">
                             <span class="me-2"><i class="bi bi-book-fill"></i></span>
                             <span>Borrow List</span>
@@ -337,7 +359,6 @@ if(isset($_COOKIE['lmsadmin'])) {
             <div class="row">
                 <div class="col-md-12 fw-bold fs-3 my-2">Borrow Requests</div>
 
-                <!-- ./NOTIFICATION -->
                 <?php
                 if(isset($success)) {
                     echo "<div class='col-8 offset-2'><div class='alert alert-success alert-dismissible fade show' role='alert'>
@@ -356,7 +377,6 @@ if(isset($_COOKIE['lmsadmin'])) {
                     unset($_SESSION['error']);
                 }
                 ?>
-                <!-- NOTIFICATION/. -->
 
             </div>
 
@@ -385,17 +405,18 @@ if(isset($_COOKIE['lmsadmin'])) {
                             if($result->num_rows) {
                                 while($row = $result->fetch_assoc()) {
                                     echo "
-                                            <tr>
-                                                <td>{$i}</td>
-                                                <td>{$row['borrowed_by']}</td>
-                                                <td class='text-uppercase'>{$row['book_code']}</td>
-                                                <td class='text-center'>
-                                                    <form action='' method='POST'>
-                                                        <input type='hidden' name='book_id' value='{$row['id']}'>
-                                                        <button class='btn btn-success' type='submit' name='approve'>Approve</button>
-                                                    </form>
-                                                </td>
-                                            </tr>";
+                                        <tr>
+                                            <td>{$i}</td>
+                                            <td>{$row['borrowed_by']}</td>
+                                            <td class='text-uppercase'>{$row['book_code']}</td>
+                                            <td class='text-center'>
+                                                <form action='' method='POST'>
+                                                    <input type='hidden' name='book_id' value='{$row['id']}'>
+                                                    <button class='btn btn-success' type='submit' name='approve'>Approve</button>
+                                                    <button class='btn btn-danger' type='submit' name='decline'>Decline</button>
+                                                </form>
+                                            </td>
+                                        </tr>";
                                     $i++;
                                 }
                             } else {

@@ -8,7 +8,7 @@
 
 include '../includes/connect.php';
 // include 'functions/charts.php';
-// include 'functions/counter.php';
+include 'functions/manual.php';
 include 'functions/dashboard.php';
 
 
@@ -29,27 +29,74 @@ if(isset($_COOKIE['lmsadmin'])) {
     $adrow = $result->fetch_assoc();
     $adminrole = $adrow['role'];
 
-    // Update Librarian
-    if(isset($_POST['update'])) {
-        $uid = $_POST['uid'];
-        header("Location: updatelibrarian.php?sid={$uid}");
-    }
-    // Delete Librarian
-    if(isset($_POST['delete'])) {
-        $uid = $_POST['uid'];
-        // Check if Exist or not
-        $sql = "SELECT EXISTS (SELECT * FROM `admins` WHERE id = '$uid') as `row_exists`  LIMIT 1";
-        $result = $connect->query($sql);
 
-        if($result->fetch_assoc()['row_exists'] > 0) {
-            $sql = "DELETE FROM `admins` WHERE id = $uid";
+    // Information
+    if(isset($_POST['lend'])) {
+        $uid = $_POST['uid'];
+        $book_code = $_POST['book_code'];
+
+        // Check if Exist or not
+        $sql = "SELECT `name`, `phone`, `role` FROM `students` WHERE `uid` = '$uid' 
+                UNION SELECT `name`, `phone`, `role` FROM `teachers` WHERE `uid` = '$uid'";
+        $result = $connect->query($sql);
+        $row = $result->fetch_assoc();
+        if($row['name']) {
+            $user_name = $row['name'];
+            $user_phone = $row['phone'];
+            $user_role = $row['role'];
+
+        } else {
+            $_SESSION['error'] = "ID Doesn't Matched!";
+            header("Location: manual.php");
+        }
+
+        // Check if Book Code is Valid
+        $sql = "SELECT `id` FROM `books` WHERE `book_code` = '$book_code'";
+        $result = $connect->query($sql);
+        $row = $result->fetch_assoc();
+        if($row['id']) {
+            // Check if Book is Available or not
+            $count = bookQuantity($book_code) - borrwCount($book_code);
+
+            if($count == 0) {
+                $_SESSION['error'] = "The Book Isn't Available!";
+                header("Location: manual.php");
+            }
+        } else {
+            $_SESSION['error'] = "Wrong Book Code!";
+            header("Location: manual.php");
+            
+        }
+        
+        if(empty($_SESSION['error'])) {
+            // Insert Into BorrowList
+            $return_date = Date('Y-m-d', strtotime('+10 days'));
+
+            $sql = "INSERT INTO `borrows`(
+                `book_code`,
+                `borrowed_by`,
+                `user_name`,
+                `user_phone`,
+                `user_role`,
+                `return_date`,
+                `confirmed`
+            )
+            VALUES(
+                '$book_code',
+                '$uid',
+                '$user_name',
+                '$user_phone',
+                '$user_role',
+                '$return_date',
+                '1'
+            )";
             $result = $connect->query($sql);
             if($result) {
-                $_SESSION['success'] = "Librarian Deleted Successfully";
-                header("Location: librarians.php");
+                $_SESSION['success'] = "Book Lended Successfully";
+                header("Location: index.php");
             } else {
-                $_SESSION['error'] = "Error Deleting Librarian!";
-                header("Location: librarians.php");
+                $_SESSION['error'] = "Error Lending Book!";
+                header("Location: manual.php");
             }
         }
     }
@@ -63,7 +110,7 @@ if(isset($_COOKIE['lmsadmin'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Librarian List</title>
+    <title>Lend Book Manually</title>
 
     <!-- CSS Files -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -133,11 +180,11 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <li class="px-3">
                         <a class="nav-link" href="index.php">
                             <span class="me-2">
-                        <i class="bi bi-speedometer2"></i>
-                    </span>
+                                <i class="bi bi-speedometer2"></i>
+                            </span>
                             <span>
-                        Dashboard
-                    </span>
+                                Dashboard
+                            </span>
                         </a>
                     </li>
                     <li class="my-2">
@@ -189,7 +236,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <!-- Requests -->
                     <!-- List -->
                     <li>
-                        <a class="nav-link px-3" href="manual.php">
+                        <a class="nav-link active px-3" href="manual.php">
                             <span class="me-2"><i class="bi bi-clipboard-plus"></i></span>
                             <span>Lend Book Manually</span>
                         </a>
@@ -339,12 +386,11 @@ if(isset($_COOKIE['lmsadmin'])) {
     <!-- OffCanvas -->
 
     <!-- Main Contents -->
-
-    <!-- Teachers Table -->
+    <!-- Lend Book Manually -->
     <main class="mt-5 pt-3">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
-                <div class="col-md-12 fw-bold fs-3">Librarian List</div>
+                <div class="col-md-12 fw-bold fs-3">Lend Book Manually</div>
                 <!-- ./NOTIFICATION -->
                 <?php
                 if(isset($success)) {
@@ -365,35 +411,31 @@ if(isset($_COOKIE['lmsadmin'])) {
                 }
                 ?>
                 <!-- NOTIFICATION/. -->
-                <section class="mt-2 px-2">
-                    <div class="d-flex justify-content-end mb-4">
-                        <div class="form-outline me-1">
-                        <input type="text" placeholder="Search Librarian" class="form-control" id="search">
-                        </div>
-                        <span class="btn btn-primary me-1 cursor-pointer">
-                            <a href="addlibrarian.php" class="text-light"><i class="bi bi-plus"></i></a>
-                      </span>
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-sm-8 offset-sm-2">
+                        <form action="" method="post" class="row px-3 addstudent">
+                            <div class="mt-5">
+                                <div class="col-md-10 mb-2">
+                                    <label for="uid" class="form-label">Student or Teacher's ID:</label>
+                                    <input type="number" class="form-control" name="uid" id="uid" placeholder="ex: 0741810005101001" required>
+                                </div>
+                                <div class="col-md-10 mb-2">
+                                    <label for="book_code" class="form-label">Book Code:</label>
+                                    <input type="text" class="form-control" name="book_code" id="book_code" placeholder="ex: cse-1101" required>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <button name="lend" type="submit" class="btn btn-primary text-uppercase">Lend Book</button>
+                            </div>
+                        </form>
                     </div>
-                    <div id="table_inputs"></div>
-                </section>
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered cursor-pointer col-sm-12">
-                        <thead class="table-primary">
-                            <tr class="text-center">
-                                <th>#</th>
-                                <th>User Name</th>
-                                <th>Department</th>
-                                <th class="px-3">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="showlist">
-                        </tbody>
-                    </table>
                 </div>
+                <!-- Form -->
             </div>
         </div>
     </main>
-    <!-- Teachers Table -->
+    <!-- Add Book -->
     <!-- Main Contents -->
 
     <!-- Footer -->
@@ -409,52 +451,18 @@ if(isset($_COOKIE['lmsadmin'])) {
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
+        
         $(document).ready(function() {
-            // $('#teacherList').show();
             $(".toast").toast('show');
             displayData();
-
-            $("#search").keyup(function(){
-                let searchdata = $("#search").val();
-                if(!searchdata) {
-                    displayData();
-                }
-                else {
-                    $.ajax({
-                        type:'POST',
-                        url:'l.php?a=search',
-                        data:{
-                            name:searchdata,
-                        },
-                        success:function(data){
-                            $("#showlist").html(data);
-                        }
-                    });
-                }
-            });
-        });
-
-        // Display Data
-        function displayData() {
-                let displayData = true;
-                $.ajax({
-                    url: "l.php?a=showlist",
-                    type: "post",
-                    data: {
-                        displayData: displayData
-                    },
-                    success: function(data, status) {
-                        $('#showlist').html(data);
-                    }
-                });
             }
 
     </script>
 </body>
 
 </html>
-
 <?php
+
 } else {
     header("Location: login.php");
 }
