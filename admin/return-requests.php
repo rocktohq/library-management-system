@@ -33,22 +33,25 @@ if(isset($_COOKIE['lmsadmin'])) {
         $book_id = $_POST['book_id'];
         $reid = $_POST['reid'];
 
-        echo $sql = "UPDATE 
+        $sql = "DELETE FROM `returns` WHERE `id` = '$reid'";
+        $result = $connect->query($sql);
+        if($result) {
+            $sql = "UPDATE 
                     `borrows`
                 SET
                     `returned`='1'
                 WHERE
                     `id` = '$book_id'";
-        $result = $connect->query($sql);
-        $sql = "DELETE FROM `returns` WHERE `id` = '$reid'";
-        $result = $connect->query($sql);
-        if($result) {
-            $_SESSION['success'] = "Book Returned";
-            header("Location: return-requests.php");
-        } else {
-            $_SESSION['error'] = "Error Returning Book!";
-            header("Location: return-requests.php");
+            $connect->query($sql);
+            if($result) {
+                $_SESSION['success'] = "Book Returned";
+                header("Location: return-requests.php");
+            } else {
+                $_SESSION['error'] = "Error Returning Book!";
+                header("Location: return-requests.php");
+            }
         }
+        
     }
 
 ?>

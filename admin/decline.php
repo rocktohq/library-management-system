@@ -1,6 +1,9 @@
 <?php
+
+
 include '../includes/connect.php';
 
+session_start();
 // Aprove
 if(isset($_POST['approve'])) {
     $book_id = $_POST['book_id'];

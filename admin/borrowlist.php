@@ -29,24 +29,22 @@ if(isset($_COOKIE['lmsadmin'])) {
     $adminrole = $adrow['role'];
 
     // Request
-    if(isset($_POST['approve'])) {
+    if(isset($_POST['confirm'])) {
         $book_id = $_POST['book_id'];
-        $issued_date = Date('Y-m-d', time());
-        $return_date = Date('Y-m-d', strtotime('+10 days'));
 
         $sql = "UPDATE 
-                    `borrows` 
-                SET 
-                    `confirmed`='1', `borrowed_date` = '$issued_date', `return_date` = '$return_date' 
-                WHERE 
+                    `borrows`
+                SET
+                    `returned`='1'
+                WHERE
                     `id` = '$book_id'";
         $result = $connect->query($sql);
         if($result) {
-            $_SESSION['success'] = "Book Confirmed";
-            header("Location: borrow-requests.php");
+            $_SESSION['success'] = "Book Returned";
+            header("Location: borrowlist.php");
         } else {
-            $_SESSION['error'] = "Error Confirming Book!";
-            header("Location: borrow-requests.php");
+            $_SESSION['error'] = "Error Returning Book!";
+            header("Location: borrowlist.php");
         }
     }
 
@@ -341,22 +339,43 @@ if(isset($_COOKIE['lmsadmin'])) {
 
             <!-- Librarian Notifications -->
             <div class="row mt-5">
+                <!-- ./NOTIFICATION -->
+                <?php
+                if(isset($success)) {
+                    echo "<div class='col-8 offset-2'><div class='alert alert-success alert-dismissible fade show' role='alert'>
+                            <span class='text-success'><i class='bi bi-check-circle-fill'></i></span> <span>{$success}</span>
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div></div>";
+                    unset($_SESSION['success']);
+                }
+                ?>
+                <?php
+                if(isset($error)) {
+                    echo "<div class='col-8 offset-2'><div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                            <span class='text-danger'><i class='bi bi-exclamation-triangle-fill'></i></span> <span>{$error}</span>
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                            </div></div>";
+                    unset($_SESSION['error']);
+                }
+                ?>
+                <!-- NOTIFICATION/. -->
                 <div class="col-md-12 mb-4">
-                    <div class="card text-dark bg-default h-100">
-                        <div class="card-header fw-bold">Borrow List</div>
-                        <div class="card-body">
+                    <!-- <div class="card text-dark bg-default h-100"> -->
+                        <div class="card-header fw-bold mb-3">Borrow List</div>
+                        <!-- <div class="card-body"> -->
                             <div class="table-responsive">
                                 <table class='table table-hover table-bordered cursor-pointer col-sm-12'>
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID</th>
                                             <th>Name</th>
+                                            <th>ID</th>
                                             <th>Type</th>
                                             <th>Phone</th>
                                             <th>Book Code</th>
                                             <th>Borrow Date</th>
                                             <th>Return Date</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -383,13 +402,19 @@ if(isset($_COOKIE['lmsadmin'])) {
                                     echo "
                                             <tr>
                                                 <td>{$i}</td>
-                                                <td>{$row['borrowed_by']}</td>
                                                 <td>{$row['user_name']}</td>
+                                                <td>{$row['borrowed_by']}</td>
                                                 <td>{$type}</td>
                                                 <td>{$row['user_phone']}</td>
                                                 <td class='text-uppercase'>{$row['book_code']}</td>
                                                 <td>{$borrow_date}</td>
                                                 <td>{$return_date}</td>
+                                                <td>
+                                                    <form action='' method='POST'>
+                                                        <input type='hidden' name='book_id' value='{$row['id']}'>
+                                                        <button class='btn btn-success' type='submit' name='confirm'>Returned</button>
+                                                    </form>
+                                                </td>
                                             </tr>";
                                     $i++;
                                 }
@@ -399,9 +424,9 @@ if(isset($_COOKIE['lmsadmin'])) {
                             ?>
                                     </tbody>
                                 </table>
-                            </div>
+                            <!-- </div> -->
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </div>
             </div>
             <!-- Librarian Notifications -->
