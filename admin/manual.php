@@ -198,7 +198,7 @@ if(isset($_COOKIE['lmsadmin'])) {
                     <?php if($adminrole == 1) { ?>
                     <!-- Librarian List -->
                     <li>
-                        <a class="nav-link active px-3" href="librarians.php">
+                        <a class="nav-link px-3" href="librarians.php">
                             <span class="me-2"><i class="bi bi-person-circle"></i></span>
                             <span>Librarians</span>
                         </a>
